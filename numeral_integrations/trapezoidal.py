@@ -80,8 +80,16 @@ print(error)
 
 
 # ---- trapezoidal rule for an ellipse
+from scipy.special import ellipe
+
+
 def f(x, a, b):
     return b * np.sqrt(1 - (x**2 / a**2))
+
+
+def real_ellipse_circumference(a, b):
+    e_sq = 1 - b**2 / a**2
+    return 4 * a * ellipe(e_sq)
 
 
 def trapezoidal_rule_elipse(f, a, b, n, ax, bx):
@@ -133,7 +141,7 @@ def f(x):
 sin = {
     "f": f,
     "a": 0,
-    "b": 2 * np.pi,
+    "b": np.pi,
     "n": 10,
 }
 
@@ -146,10 +154,10 @@ plt.plot(x_dense, y_dense)
 plt.fill_between(x, y, alpha=0.3)
 plt.show()
 
-# calculate the error
-true_integral = 0
+true_integral = 2
 error = np.abs(integral - true_integral)
 print(error)
+
 
 # ---------------- CURVE LENGTH USING TRAPEZOIDAL RULE ----------------
 # calculate the curve length of a circle using the trapezoidal rule with a circumference of 1
