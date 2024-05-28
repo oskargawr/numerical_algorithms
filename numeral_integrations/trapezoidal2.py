@@ -16,6 +16,53 @@ def trapezoidal_rule(f, a, b, n):
     return h * (np.sum(y) - 0.5 * (y[0] + y[-1])), x, y
 
 
+# ---- trapezoidal rule for a circle ----
+def f_circle(x):
+    return np.sqrt(1 - x**2)
+
+
+def circle_area(r):
+    return np.pi * r**2
+
+
+def trapezoidal_rule_circle(f, r, n):
+    h = 2 * r / n
+    x = np.linspace(-r, r, n + 1)
+    y = f(x)
+    integral = h / 2 * (y[0] + 2 * np.sum(y[1:-1]) + y[-1])
+    return integral
+
+
+def plot_circle_and_approximation(f, r, n):
+    x_dense = np.linspace(-r, r, 1000)
+    y_dense = f(x_dense)
+    plt.plot(x_dense, y_dense, label=f"Koło: r={r}")
+    h = 2 * r / n
+    x = np.linspace(-r, r, n + 1)
+    y = f(x)
+    plt.fill_between(x, y, alpha=0.3)
+    plt.title(f"Metoda trapezów dla koła, n={n}")
+    plt.show()
+
+
+n = [30, 10000, 1000000, 100000000]
+
+# for n in n:
+#     start_time = time.time()
+#     integral = trapezoidal_rule_circle(f_circle, 1, n)
+#     end_time = time.time()
+#     true_integral = circle_area(1)
+#     approx_area = 2 * integral
+#     true_pi = np.pi
+#     pi_approx = 2 * integral
+#     error = np.abs(true_pi - pi_approx)
+#     print(
+#         f" Wynik: {approx_area}, Błąd: {error}, Czas: {end_time - start_time} s, Przybliżona wartość π: {pi_approx}, n: {n}"
+#     )
+#     if n == 30:
+#         plot_circle_and_approximation(f_circle, 1, n)
+
+
 # Generowanie wykresów dla różnych wartości n
 def plot_trapezoidal(f, a, b, n):
     integral, x, y = trapezoidal_rule(f, a, b, n)
@@ -38,6 +85,8 @@ for n in n_values:
     start_time = time.time()
     if n == 30:
         integral = plot_trapezoidal(f, a, b, n)
+
+    integral, _, _ = trapezoidal_rule(f, a, b, n)
     end_time = time.time()
     true_integral = 1 / 3
     error = np.abs(integral - true_integral)
