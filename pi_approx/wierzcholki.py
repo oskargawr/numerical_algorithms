@@ -24,9 +24,7 @@ def znajdz_wierzcholki(wierzcholek_poczatkowy, n):
         wierzcholki.append(punkt.tolist())
     return wierzcholki
 
-
-punkt_poczatkowy = [0, 1]
-n = 1000
+    # err = np.pi - oblicz_obwod_po_wierzcholkach(wierzcholki) / 2
 
 
 ## h2
@@ -40,10 +38,7 @@ def czy_suma_wektorow_zero(wierzcholki):
     return suma_wektorow
 
 
-wierzcholki = znajdz_wierzcholki(punkt_poczatkowy, n)
-suma_wektorow = czy_suma_wektorow_zero(wierzcholki)
-
-print("Suma wszystkich wektorów wi:", suma_wektorow)
+# print("Suma wszystkich wektorów wi:", suma_wektorow)
 
 ## --
 
@@ -95,11 +90,10 @@ def czy_suma_wektorow_zero_h3(wierzcholki):
 # Testujemy dla wielokąta o n=100
 # punkt_poczatkowy = [0, 1]
 # n = 100
-wierzcholki = znajdz_wierzcholki(punkt_poczatkowy, n)
-suma_x, suma_y = czy_suma_wektorow_zero_h3(wierzcholki)
+# suma_x, suma_y = czy_suma_wektorow_zero_h3(wierzcholki)
 
-print("Suma współrzędnych x:", suma_x)
-print("Suma współrzędnych y:", suma_y)
+# print("Suma współrzędnych x:", suma_x)
+# print("Suma współrzędnych y:", suma_y)
 
 ## ---
 
@@ -113,7 +107,18 @@ def oblicz_obwod_po_wierzcholkach(wierzcholki):
     return obwod
 
 
-wierzcholki = znajdz_wierzcholki(punkt_poczatkowy, n)
+punkt_poczatkowy = [0, 1]
+n = [10, 100, 1000, 10000, 100000, 1000000, 10000000]
+
+for i in n:
+    time_start = time.time()
+    wierzcholki = znajdz_wierzcholki(punkt_poczatkowy, i)
+    pi_est = oblicz_obwod_po_wierzcholkach(wierzcholki) / 2
+    time_end = time.time()
+    err = np.pi - pi_est
+    print(
+        f"n = {i}, pi_estimate = {pi_est}, err = {err} czas = {time_end - time_start:.4f} s"
+    )
 
 
 ## h4
@@ -139,7 +144,6 @@ def find_iterations_for_accuracy():
 
 # print("Wielokąt ma", len(wierzcholki), "wierzchołków")
 # print("Obwód wielokąta to:", oblicz_obwod_po_wierzcholkach(wierzcholki))
-# print("Przybliżona wartość pi to:", oblicz_obwod_po_wierzcholkach(wierzcholki) / 2)
 
 # n_test = [10, 100, 1000, 10000, 100000]
 # n_test = np.geomspace(10, 10000, 100)

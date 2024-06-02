@@ -47,20 +47,20 @@ def plot_circle_and_approximation(f, r, n):
 
 n = [30, 10000, 1000000, 100000000]
 
-# for n in n:
-#     start_time = time.time()
-#     integral = trapezoidal_rule_circle(f_circle, 1, n)
-#     end_time = time.time()
-#     true_integral = circle_area(1)
-#     approx_area = 2 * integral
-#     true_pi = np.pi
-#     pi_approx = 2 * integral
-#     error = np.abs(true_pi - pi_approx)
-#     print(
-#         f" Wynik: {approx_area}, Błąd: {error}, Czas: {end_time - start_time} s, Przybliżona wartość π: {pi_approx}, n: {n}"
-#     )
-#     if n == 30:
-#         plot_circle_and_approximation(f_circle, 1, n)
+for n in n:
+    start_time = time.time()
+    integral = trapezoidal_rule_circle(f_circle, 1, n)
+    end_time = time.time()
+    true_integral = circle_area(1)
+    approx_area = 2 * integral
+    true_pi = np.pi
+    pi_approx = 2 * integral
+    error = np.abs(true_pi - pi_approx)
+    print(
+        f" Wynik: {approx_area}, Błąd: {error}, Czas: {end_time - start_time} s, Przybliżona wartość π: {pi_approx}, n: {n}"
+    )
+    if n == 30:
+        plot_circle_and_approximation(f_circle, 1, n)
 
 
 # Generowanie wykresów dla różnych wartości n
@@ -130,20 +130,20 @@ ellipse_params = [{"a": 3, "b": 1}, {"a": 5, "b": 8}, {"a": 10, "b": 3}]
 
 n_values_ellipse = [30, 10000, 1000000, 100000000]
 
-for params in ellipse_params:
-    a, b = params["a"], params["b"]
-    for n in n_values_ellipse:
-        ellipse = {"f": f_ellipse, "a": a, "b": b, "n": n, "ax": -a, "bx": a}
-        start_time = time.time()
-        integral = 2 * trapezoidal_rule_ellipse(**ellipse)
-        end_time = time.time()
-        true_integral = elipse_area(a, b)
-        error = np.abs(integral - true_integral)
-        print(
-            f"Elipsa: a={a}, b={b}, n={n}, Wynik: {integral}, Błąd: {error}, Czas: {end_time - start_time} s"
-        )
-        if n == 30:
-            plot_ellipse_and_approximation(f_ellipse, a, b, n, -a, a)
+# for params in ellipse_params:
+#     a, b = params["a"], params["b"]
+#     for n in n_values_ellipse:
+#         ellipse = {"f": f_ellipse, "a": a, "b": b, "n": n, "ax": -a, "bx": a}
+#         start_time = time.time()
+#         integral = 2 * trapezoidal_rule_ellipse(**ellipse)
+#         end_time = time.time()
+#         true_integral = elipse_area(a, b)
+#         error = np.abs(integral - true_integral)
+#         print(
+#             f"Elipsa: a={a}, b={b}, n={n}, Wynik: {integral}, Błąd: {error}, Czas: {end_time - start_time} s"
+#         )
+#         if n == 30:
+#             plot_ellipse_and_approximation(f_ellipse, a, b, n, -a, a)
 
 
 # ---- trapezoidal rule for a sine function ----
@@ -153,22 +153,22 @@ def f_sin(x):
 
 n_values_sine = [30, 10000, 1000000, 100000000]
 
-for n in n_values_sine:
-    start_time = time.time()
-    integral, x, y = trapezoidal_rule(f_sin, 0, np.pi, n)
-    end_time = time.time()
-    true_integral = 2
-    error = np.abs(integral - true_integral)
-    print(
-        f"Sinus, n={n}, Wynik: {integral}, Błąd: {error}, Czas: {end_time - start_time} s"
-    )
-    if n == 30:
-        x_dense = np.linspace(0, np.pi, 1000)
-        y_dense = f_sin(x_dense)
-        plt.plot(x_dense, y_dense)
-        plt.fill_between(x, y, alpha=0.3)
-        plt.title(f"Metoda trapezów dla funkcji sinus, n={n}")
-        plt.show()
+# for n in n_values_sine:
+#     start_time = time.time()
+#     integral, x, y = trapezoidal_rule(f_sin, 0, np.pi, n)
+#     end_time = time.time()
+#     true_integral = 2
+#     error = np.abs(integral - true_integral)
+#     print(
+#         f"Sinus, n={n}, Wynik: {integral}, Błąd: {error}, Czas: {end_time - start_time} s"
+#     )
+#     if n == 30:
+#         x_dense = np.linspace(0, np.pi, 1000)
+#         y_dense = f_sin(x_dense)
+#         plt.plot(x_dense, y_dense)
+#         plt.fill_between(x, y, alpha=0.3)
+#         plt.title(f"Metoda trapezów dla funkcji sinus, n={n}")
+#         plt.show()
 
 
 import numpy as np
@@ -236,10 +236,10 @@ for n in n_values:
         )
     end_time = time.time()
     circle_circumference = 4 * quarter_circle_length
-    true_circumference = 2 * np.pi
-    error = np.abs(circle_circumference - true_circumference)
+    estimated_pi = 2 * quarter_circle_length
+    error = np.abs(estimated_pi - np.pi)
     print(
-        f"n: {n}, Obwód koła: {circle_circumference}, Błąd: {error}, Czas: {end_time - start_time} s"
+        f"n: {n}, Obwód koła: {circle_circumference}, Przyblizona wartosc pi: {estimated_pi} Błąd: {error}, Czas: {end_time - start_time} s"
     )
 
 # --- ellipse circumference ---

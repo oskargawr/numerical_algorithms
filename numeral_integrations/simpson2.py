@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 from scipy.special import ellipe
+from scipy.integrate import quad
 
 # ---- Area calculation using Simpson's Rule ----
 
@@ -68,6 +69,36 @@ for n in n_values:
     print(
         f"n: {n}, Przybliżona wartość π: {pi_approx}, Błąd: {error}, Czas: {end_time - start_time} s"
     )
+
+# ---- Area calculation for parabolas ----
+
+
+def parabola_func(x):
+    return x**2
+
+
+def simpson_rule_parabola(f, a, b, n):
+    h = (b - a) / n
+    x = np.linspace(a, b, n + 1)
+    y = f(x)
+    integral = h / 3 * (y[0] + 4 * np.sum(y[1:-1:2]) + 2 * np.sum(y[2:-1:2]) + y[-1])
+    return integral
+
+
+# Parametry całkowania
+n_values = [30, 10000, 1000000, 100000000]
+
+# Testowanie metody Simpsona dla różnych n dla paraboli
+a, b = 0, 1
+for n in n_values:
+    start_time = time.time()
+    integral = simpson_rule_parabola(parabola_func, a, b, n)
+    end_time = time.time()
+    true_integral = 1 / 3
+    error = np.abs(integral - true_integral)
+    print(f"n: {n}, Wynik: {integral}, Błąd: {error}, Czas: {end_time - start_time} s")
+    if n == 30:
+        plot_simpson_parabolas(parabola_func, a, b, n)
 
 # ---- Area calculation for ellipses ----
 
@@ -153,13 +184,8 @@ for n in n_values:
         f"Sinus, n={n}, Wynik: {integral}, Błąd: {error}, Czas: {end_time - start_time} s"
     )
 
-import numdifftools as nd
-
-import numdifftools as nd
-
-import numdifftools as nd
-
 # ---- Curve length calculation using Simpson's Rule ----
+print("------ Krzywe ------")
 
 
 def circle_func(x):
@@ -225,7 +251,7 @@ a, b = 0, 1
 for n in n_values:
     start_time = time.time()
     if n == 30:
-        plot_simpson_curve(circle_func, circle_derivative, a, b, n)
+        plot_simpson_curve(circle_derivative, circle_derivative, a, b, n)
         quarter_circle_length, _, _ = curve_length(
             circle_func, circle_derivative, a, b, n
         )
@@ -236,9 +262,10 @@ for n in n_values:
     end_time = time.time()
     circle_circumference = 4 * quarter_circle_length
     true_circumference = 2 * np.pi
-    error = np.abs(circle_circumference - true_circumference)
+    pi_approx = 2 * quarter_circle_length
+    error = np.abs(np.pi - pi_approx)
     print(
-        f"n: {n}, Obwód koła: {circle_circumference}, Błąd: {error}, Czas: {end_time - start_time} s"
+        f"n: {n}, Obwód koła: {circle_circumference}, pi approx: {pi_approx}, Błąd: {error}, Czas: {end_time - start_time} s"
     )
 
 # ---- Curve length calculation for ellipses ----
@@ -263,8 +290,8 @@ for params in ellipse_params:
     for n in n_values:
         start_time = time.time()
         if n == 30:
-            quarter_ellipse_length = plot_simpson_curve(
-                lambda x: ellipse_func(x, a, b),
+            plot_simpson_curve(
+                lambda x: ellipse_derivative(x, a, b),
                 lambda x: ellipse_derivative(x, a, b),
                 -a,
                 a,
@@ -287,7 +314,6 @@ for params in ellipse_params:
         )
 
 # ---- Curve length calculation for sine function ----
-from scipy.integrate import quad
 
 
 def sin_derivative(x):
@@ -301,7 +327,7 @@ def f(x):
 for n in n_values:
     start_time = time.time()
     if n == 30:
-        sin_length = plot_simpson_curve(np.sin, sin_derivative, 0, 2 * np.pi, n)
+        plot_simpson_curve(sin_derivative, sin_derivative, 0, 2 * np.pi, n)
 
     sin_length, _, _ = curve_length(np.sin, sin_derivative, 0, 2 * np.pi, n)
     end_time = time.time()
